@@ -37,7 +37,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ```bash
 
 # Clone este repositório
-$ git clone git@github.com:Joaopdev/Inventario-Raro.git
+$ git clone git@github.com:
 
 # Vá para a pasta server
 $ cd server
