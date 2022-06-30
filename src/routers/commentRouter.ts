@@ -1,46 +1,32 @@
-import { PostController } from "../controllers/PostController";
+import { CommentController } from "../controllers/CommentController";
 import { RequestHandler, Router } from "express";
 import Container from "typedi";
 import RequestWithUserData from "../@types/controllers/RequestWithUserData";
 import { authenticationMiddleware } from "../middlewares/authenticationMiddleware";
-
 const router = Router();
 
-const getController = (): PostController => {
-  return Container.get<PostController>("PostController");
+const getController = (): CommentController => {
+  return Container.get<CommentController>("CommentController");
 };
 
 const createRouter = (): Router => {
-  router.get("", (async (req, res) => {
-    await getController().listar(req, res);
-  }) as RequestHandler);
   router.get(
-    "/:id",
+    ":post_id/comments/:id",
     (async (req, res) =>
       await getController().buscar(req, res)) as RequestHandler
   );
-  router.get(
-    "/myposts", authenticationMiddleware,
-    (async (req:RequestWithUserData, res) =>
-      await getController().buscaPostsDoUsuario(req, res)) as RequestHandler
-  );
   router.post(
-    "/find",
-    (async (req, res) =>
-      await getController().buscaPostsPorTitulo(req, res)) as RequestHandler
-  );
-  router.post(
-    "",authenticationMiddleware,
+    ":post_id/comments", authenticationMiddleware,
     (async (req:RequestWithUserData, res) =>
       await getController().criar(req, res)) as RequestHandler
   );
   router.patch(
-    "/:id", authenticationMiddleware,
+    ":post_id/comments/:id", authenticationMiddleware,
     (async (req:RequestWithUserData, res) =>
       await getController().atualizar(req, res)) as RequestHandler
   );
   router.delete(
-    "/:id", authenticationMiddleware,
+    ":post_id/comments/:id", authenticationMiddleware,
     (async (req:RequestWithUserData, res) =>
       await getController().remover(req, res)) as RequestHandler
   );

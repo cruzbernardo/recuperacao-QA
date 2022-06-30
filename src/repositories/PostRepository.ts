@@ -22,6 +22,7 @@ export class PostRepository
       ],
       where: {
         id: postId,
+        comment_id: null,
       },
     });
   }

@@ -61,4 +61,15 @@ export class CommentController {
       response.status(500).send("erro interno do servidor");
     }
   }
+
+  async remover(request: RequestWithUserData, response: Response): Promise<void> {
+    const authorization = request.headers.authorization
+    if (!request.params.id) {
+      response.status(400);
+      throw new Error("Informacoes incorretas");
+    }
+    await this.commentService.remover(authorization, Number(request.params.id));
+    response.send().status(200);
+  }
+
 }
